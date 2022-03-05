@@ -30,8 +30,9 @@ if user <=14 and user !=0 :
                 list2[0] = url
                 content = Title.p.get_text()
                 list2[6]= content
-                author = Title.span.a.get_text()
-                list2[3]= author
+                author = Title.span.a
+                if author != None :
+                    list2[3]= author.get_text()
                 date = Title.span.get_text().strip()
                 presentime = datetime.now()
                 sum = ""
@@ -48,16 +49,20 @@ if user <=14 and user !=0 :
                         sum = ""
                 L = len(list2[4])+1
                 list2[5] = sum1[L:] 
-                # list3.append(list2)
-                with open('all_story_details.csv') as f:
-                    reader = csv.reader(f)
-                    for row in reader:
-                        if list2[0] not in row[0]:
-                            list3.append(list2)  
-                        break  
+                list3.append(list2)
         U+=1
-with open('all_story_details.csv', 'a', newline='') as f_object:  
-    writer_object = writer(f_object)
-    writer_object.writerows(list3)  
-    f_object.close()
+with open('all_story_details.csv') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            i = 0
+            while i < len(list3):
+                if list3[i][0]==row[0]:
+                    del list3[i]
+                    break
+                i+=1  
+if len(list3) != 0 :                    
+    with open('all_story_details.csv', 'a', newline='') as f_object:  
+        writer_object = writer(f_object)
+        writer_object.writerows(list3)  
+        f_object.close()
 
