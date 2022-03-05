@@ -27,8 +27,9 @@ if user <=14 and user !=0 :
                 list2[0] = url
                 content = Title.p.get_text()
                 list2[6]= content
-                author = Title.span.a.get_text()
-                list2[3]= author
+                author = Title.span.a
+                if author != None:
+                    list2[3]= author.get_text()
                 date = Title.span.get_text().strip()
                 presentime = datetime.now()
                 sum = ""
@@ -47,7 +48,7 @@ if user <=14 and user !=0 :
                 list2[5] = sum1[L:]  
                 list3.append(list2)
         U+=1
-filename = "all_story_details"+str(user)+".csv"
+filename = "all_story_details.csv"
 with open(filename, 'w') as csvfile:  
     csvwriter = csv.writer(csvfile) 
     csvwriter.writerow(list1) 
